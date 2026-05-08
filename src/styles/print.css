@@ -1,0 +1,294 @@
+/* ============================================================
+   UNANIMES — Rapport d'activités 2025
+   CSS d'impression A4 — Version 2
+   Ctrl+P → Format A4 → Activer "Graphiques en arrière-plan"
+   ============================================================ */
+
+@media print {
+
+  /* ── Format A4 ── */
+  @page {
+    size: A4 portrait;
+    margin: 18mm 15mm 22mm 15mm;
+  }
+
+  @page :first {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* ── Forcer les couleurs ── */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* ── Reset global impression ── */
+  body {
+    background: white !important;
+    color: #111827 !important;
+    font-size: 10pt;
+    line-height: 1.5;
+    font-family: 'Nunito', Arial, sans-serif;
+  }
+
+  /* ── Éléments masqués ── */
+  .print-hidden,
+  [data-print="hidden"],
+  #sommaire-toggle,
+  #sommaire-panel,
+  .scroll-progress,
+  .print-btn,
+  button:not([data-print="show"]),
+  nav[aria-label="Sommaire du rapport"],
+  .galerie-carousel,
+  .media-filters,
+  video,
+  iframe,
+  [role="dialog"] {
+    display: none !important;
+  }
+
+  /* ── Sections sombres → fond blanc à l'impression ── */
+  section[style*="background"],
+  section[class*="bg-[#0a2540]"],
+  section[class*="bg-[#0d3055]"],
+  .bg-section-dark {
+    background: white !important;
+    color: #111827 !important;
+  }
+
+  /* Override inline styles des sections sombres */
+  #contexte-crise,
+  #faits-marquants,
+  #temoignages,
+  #galerie,
+  #rejoindre {
+    background: white !important;
+    color: #111827 !important;
+  }
+
+  /* Tous les textes blancs → noirs */
+  [style*="color: #ffffff"],
+  [style*="color: white"],
+  [style*="color: #b8d4ea"],
+  [style*="color: #7aadd4"],
+  [style*="color: #d1d5db"],
+  .text-white,
+  h1, h2, h3, h4 {
+    color: #111827 !important;
+  }
+
+  /* Textes colorés → garder les couleurs de marque sur fond blanc */
+  [style*="color: #c8e600"] { color: #5a6500 !important; }  /* lime → vert foncé lisible */
+  [style*="color: #00d4c8"] { color: #007a74 !important; }  /* turquoise → foncé lisible */
+
+  /* Fonds colorés des blocs → blanc + bordure */
+  [style*="background-color: #0a2540"],
+  [style*="background: linear-gradient"],
+  [class*="bg-[#0a2540]"],
+  [class*="bg-[#0d3055]"] {
+    background: #f3f4f6 !important;
+    color: #111827 !important;
+    border: 1pt solid #d1d5db !important;
+  }
+
+  /* ── Page de couverture (Hero) ── */
+  #hero {
+    page: cover;
+    page-break-before: avoid;
+    page-break-after: always;
+    break-after: page;
+    background: #0a2540 !important;
+    color: white !important;
+    min-height: 0 !important;
+    height: 260mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 40mm 25mm !important;
+    text-align: center !important;
+  }
+
+  #hero * {
+    color: white !important;
+  }
+
+  #hero h1 {
+    color: #c8e600 !important;
+    font-size: 56pt !important;
+  }
+
+  @page cover {
+    margin: 0 !important;
+    @top-left    { content: none; }
+    @top-right   { content: none; }
+    @bottom-center { content: none; }
+    @bottom-right  { content: none; }
+  }
+
+  /* ── Sauts de page entre sections ── */
+  #edito,
+  #qui-sommes-nous,
+  #contexte-crise,
+  #chiffres-cles,
+  #missions,
+  #gouvernance,
+  #axes-strategiques,
+  #faits-marquants,
+  #medias-presse,
+  #focus-projets,
+  #bilan-financier,
+  #perspectives,
+  #rejoindre,
+  #annexes {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Sections courtes fusionnées */
+  #temoignages,
+  #galerie {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* ── Éléments jamais coupés ── */
+  article,
+  figure,
+  blockquote,
+  table,
+  .card,
+  .stat-card,
+  .membre-card,
+  .media-card,
+  .projet-card,
+  .temoignage-card,
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* ── Titres jamais seuls ── */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* ── Images ── */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* ── Grilles → colonnes réduites ── */
+  .grid {
+    display: grid !important;
+  }
+
+  /* 4 colonnes → 2 colonnes max en impression */
+  [class*="lg:grid-cols-4"],
+  [class*="grid-cols-4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  [class*="lg:grid-cols-3"],
+  [class*="grid-cols-3"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* ── Galerie ── */
+  .galerie-carousel {
+    display: none !important;
+  }
+
+  .galerie-print {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4mm !important;
+  }
+
+  /* ── Tableaux ── */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    font-size: 9pt !important;
+  }
+
+  th, td {
+    border: 0.5pt solid #d1d5db !important;
+    padding: 4pt 6pt !important;
+    text-align: left !important;
+    color: #111827 !important;
+  }
+
+  thead {
+    background-color: #0a2540 !important;
+    color: white !important;
+    display: table-header-group !important;
+  }
+
+  thead th,
+  thead td {
+    color: white !important;
+  }
+
+  /* ── Liens — afficher l'URL ── */
+  a[href^="http"]:not(.no-url)::after {
+    content: " (" attr(href) ")";
+    font-size: 7pt;
+    color: #6b7280;
+    word-break: break-all;
+  }
+
+  nav a::after,
+  footer a::after,
+  button::after {
+    content: none !important;
+  }
+
+  /* ── Typographie impression ── */
+  h1 { font-size: 20pt !important; }
+  h2 { font-size: 15pt !important; }
+  h3 { font-size: 12pt !important; }
+  h4 { font-size: 10pt !important; }
+  p, li, td { font-size: 9.5pt !important; }
+  .text-xs, caption { font-size: 8pt !important; }
+
+  /* ── En-tête et pied de page sur chaque feuille ── */
+  @page {
+    @top-left {
+      content: "UNANIMES";
+      font-size: 8pt;
+      color: #6b7280;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    @top-right {
+      content: "Rapport d'activités 2025";
+      font-size: 8pt;
+      color: #6b7280;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    @bottom-center {
+      content: counter(page) " / " counter(pages);
+      font-size: 8pt;
+      color: #9ca3af;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    @bottom-right {
+      content: "unanimes.fr";
+      font-size: 8pt;
+      color: #9ca3af;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+  }
+}
